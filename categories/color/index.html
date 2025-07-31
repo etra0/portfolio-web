@@ -6,10 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Merriweather:400,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="sidebar">
-      <h1><a href="/">Sebastián Aedo</a></h1>
+      <h1><span href="/">Sebastián Aedo</span></h1>
     <ul>
       
         <li><a href="/categories/black-and-white/">Black and White</a></li>
@@ -24,42 +26,155 @@
     
 <h2>Color</h2>
 
-<div class="glide">
-  <div class="glide__track" data-glide-el="track">
-    <ul class="glide__slides">
-      
-      <li class="glide__slide">
-        <img src="https://f005.backblazeb2.com/b2api/v1/b2_download_file_by_id?fileId=4_z98178d25a9185bee9b87091e_f10384a80f32ae5b2_d20250731_m130737_c005_v0501025_t0021_u01753967257315" alt="Big mirror">
-        <p>Big mirror</p>
-      </li>
-      
-      <li class="glide__slide">
-        <img src="https://f005.backblazeb2.com/b2api/v1/b2_download_file_by_id?fileId=4_z98178d25a9185bee9b87091e_f118aab113212d69a_d20250731_m130736_c005_v0501009_t0010_u01753967256340" alt="Lasers">
-        <p>Lasers</p>
-      </li>
-      
-      <li class="glide__slide">
-        <img src="https://f005.backblazeb2.com/b2api/v1/b2_download_file_by_id?fileId=4_z98178d25a9185bee9b87091e_f112d0e7051923dec_d20250731_m130738_c005_v0501001_t0038_u01753967258201" alt="New York">
-        <p>New York</p>
-      </li>
-      
-      <li class="glide__slide">
-        <img src="https://f005.backblazeb2.com/b2api/v1/b2_download_file_by_id?fileId=4_z98178d25a9185bee9b87091e_f115b4f7209c2fbcc_d20250731_m130739_c005_v0501019_t0045_u01753967259021" alt="Ocean">
-        <p>Ocean</p>
-      </li>
-      
-    </ul>
+<div class="gallery-grid">
+  
+    <img src="https://f005.backblazeb2.com/b2api/v1/b2_download_file_by_id?fileId=4_z98178d25a9185bee9b87091e_f10384a80f32ae5b2_d20250731_m130737_c005_v0501025_t0021_u01753967257315" alt="Big mirror" onclick="expandImage('https:\/\/f005.backblazeb2.com\/b2api\/v1\/b2_download_file_by_id?fileId=4_z98178d25a9185bee9b87091e_f10384a80f32ae5b2_d20250731_m130737_c005_v0501025_t0021_u01753967257315', 'Big mirror',  0 )">
+  
+    <img src="https://f005.backblazeb2.com/b2api/v1/b2_download_file_by_id?fileId=4_z98178d25a9185bee9b87091e_f118aab113212d69a_d20250731_m130736_c005_v0501009_t0010_u01753967256340" alt="Lasers" onclick="expandImage('https:\/\/f005.backblazeb2.com\/b2api\/v1\/b2_download_file_by_id?fileId=4_z98178d25a9185bee9b87091e_f118aab113212d69a_d20250731_m130736_c005_v0501009_t0010_u01753967256340', 'Lasers',  1 )">
+  
+    <img src="https://f005.backblazeb2.com/b2api/v1/b2_download_file_by_id?fileId=4_z98178d25a9185bee9b87091e_f112d0e7051923dec_d20250731_m130738_c005_v0501001_t0038_u01753967258201" alt="New York" onclick="expandImage('https:\/\/f005.backblazeb2.com\/b2api\/v1\/b2_download_file_by_id?fileId=4_z98178d25a9185bee9b87091e_f112d0e7051923dec_d20250731_m130738_c005_v0501001_t0038_u01753967258201', 'New York',  2 )">
+  
+    <img src="https://f005.backblazeb2.com/b2api/v1/b2_download_file_by_id?fileId=4_z98178d25a9185bee9b87091e_f115b4f7209c2fbcc_d20250731_m130739_c005_v0501019_t0045_u01753967259021" alt="Ocean" onclick="expandImage('https:\/\/f005.backblazeb2.com\/b2api\/v1\/b2_download_file_by_id?fileId=4_z98178d25a9185bee9b87091e_f115b4f7209c2fbcc_d20250731_m130739_c005_v0501019_t0045_u01753967259021', 'Ocean',  3 )">
+  
+</div>
+<div id="expanded-view" class="expanded-view">
+  <button class="arrow left" onclick="prevImage(event)">&#8592;</button>
+  <div class="expanded-img-container">
+    <img id="expanded-img" src="" alt="">
+    <p id="expanded-caption"></p>
   </div>
+  <button class="arrow right" onclick="nextImage(event)">&#8594;</button>
+  <button class="close-btn" onclick="closeExpanded()">×</button>
 </div>
 
   </main>
   <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/glide.min.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
+      
       document.querySelectorAll(".glide").forEach(function (carousel) {
         new Glide(carousel, { type: 'carousel', perView: 1, focusAt: 'center' }).mount();
       });
+
+      
+      const container = document.querySelector('.gallery-grid');
+      if (container) {
+        const gap = 8;
+        const targetRowHeight = 400; 
+        const images = Array.from(container.querySelectorAll('img'));
+
+        function layout() {
+          container.innerHTML = '';
+          let row = [];
+          let rowAspectSum = 0;
+          const containerWidth = container.clientWidth;
+
+          images.forEach((img, i) => {
+            const aspect = img.naturalWidth / img.naturalHeight;
+            row.push(img);
+            rowAspectSum += aspect;
+
+            const rowWidth = rowAspectSum * targetRowHeight + gap * (row.length - 1);
+
+            if (rowWidth >= containerWidth || i === images.length - 1) {
+              const totalGap = gap * (row.length - 1);
+              const rowHeight = Math.min(targetRowHeight, (containerWidth - totalGap) / rowAspectSum);
+
+              const rowDiv = document.createElement('div');
+              rowDiv.className = 'gallery-row';
+
+              row.forEach(imgInRow => {
+                const aspect = imgInRow.naturalWidth / imgInRow.naturalHeight;
+                const imgClone = imgInRow.cloneNode();
+                imgClone.style.height = rowHeight + 'px';
+                imgClone.style.width = (rowHeight * aspect) + 'px';
+                rowDiv.appendChild(imgClone);
+              });
+
+              container.appendChild(rowDiv);
+              row = [];
+              rowAspectSum = 0;
+            }
+          });
+          container.classList.add('loaded');
+          updateGalleryImages(); 
+        }
+
+        
+        let loaded = 0;
+        images.forEach(img => {
+          if (img.complete) loaded++;
+          else img.addEventListener('load', () => {
+            loaded++;
+            if (loaded === images.length) layout();
+          });
+        });
+        if (loaded === images.length) layout();
+
+        window.addEventListener('resize', layout);
+
+        
+        function updateGalleryImages() {
+          galleryImages = Array.from(container.querySelectorAll('img'));
+          galleryImages.forEach((img, idx) => {
+            img.setAttribute('data-caption', img.getAttribute('alt') || '');
+            img.onclick = function() { expandImage(img.src, img.getAttribute('alt') || '', idx); };
+          });
+        }
+        
+        window.addEventListener('resize', updateGalleryImages);
+        if (loaded === images.length) updateGalleryImages();
+      }
     });
-  </script>
+
+    let currentIndex = 0;
+let galleryImages = [];
+
+function expandImage(url, caption, index) {
+  const expandedView = document.getElementById('expanded-view');
+  document.getElementById('expanded-img').src = url;
+  document.getElementById('expanded-caption').textContent = caption;
+  expandedView.classList.add('active');
+  currentIndex = index;
+}
+
+function closeExpanded() {
+  document.getElementById('expanded-view').classList.remove('active');
+  document.getElementById('expanded-img').src = '';
+  document.getElementById('expanded-caption').textContent = '';
+}
+
+function prevImage(e) {
+  e.stopPropagation();
+  if (galleryImages.length === 0) return;
+  currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+  showCurrentImage();
+}
+
+function nextImage(e) {
+  e.stopPropagation();
+  if (galleryImages.length === 0) return;
+  currentIndex = (currentIndex + 1) % galleryImages.length;
+  showCurrentImage();
+}
+
+function showCurrentImage() {
+  const img = galleryImages[currentIndex];
+  expandImage(img.src, img.getAttribute('data-caption'), currentIndex);
+}
+
+document.addEventListener("keydown", function(e) {
+  const expandedView = document.getElementById('expanded-view');
+  if (!expandedView || !expandedView.classList.contains('active')) return;
+
+  if (e.key === "ArrowLeft") {
+    prevImage(e);
+  } else if (e.key === "ArrowRight") {
+    nextImage(e);
+  } else if (e.key === "Escape") {
+    closeExpanded();
+  }
+});
+</script>
 </body>
 </html>
