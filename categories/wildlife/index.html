@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Wildlife</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css">
+</head>
+<body>
+  <div class="sidebar">
+    <h1>Sebastián Aedo</h1>
+    <ul>
+      
+        <li><a href="/categories/black-and-white/">Black and White</a></li>
+      
+        <li><a href="/categories/color/">Color</a></li>
+      
+        <li><a href="/categories/wildlife/">Wildlife</a></li>
+      
+    </ul>
+  </div>
+  <main>
+    
+<h2>Wildlife</h2>
+
+<div class="glide">
+  <div class="glide__track" data-glide-el="track">
+    <ul class="glide__slides">
+      
+      <li class="glide__slide">
+        <img src="https://f005.backblazeb2.com/b2api/v1/b2_download_file_by_id?fileId=4_z98178d25a9185bee9b87091e_f100f72de4829415e_d20250731_m043844_c005_v0501033_t0017_u01753936724130" alt="Colibrí Chico">
+        <p>Colibrí Chico</p>
+      </li>
+      
+      <li class="glide__slide">
+        <img src="https://f005.backblazeb2.com/b2api/v1/b2_download_file_by_id?fileId=4_z98178d25a9185bee9b87091e_f109e89a8fb7e211e_d20250731_m043618_c005_v0501027_t0059_u01753936578181" alt="">
+        <p></p>
+      </li>
+      
+      <li class="glide__slide">
+        <img src="https://f005.backblazeb2.com/b2api/v1/b2_download_file_by_id?fileId=4_z98178d25a9185bee9b87091e_f1021932b62d518df_d20250731_m043619_c005_v0501033_t0031_u01753936579127" alt="">
+        <p></p>
+      </li>
+      
+      <li class="glide__slide">
+        <img src="https://f005.backblazeb2.com/b2api/v1/b2_download_file_by_id?fileId=4_z98178d25a9185bee9b87091e_f10159bd44af4cddf_d20250731_m043619_c005_v0501000_t0047_u01753936579485" alt="">
+        <p></p>
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/glide.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelectorAll(".glide").forEach(function (carousel) {
+        new Glide(carousel, { type: 'carousel', perView: 1, focusAt: 'center' }).mount();
+      });
+    });
+  </script>
+</body>
+</html>

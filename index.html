@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="generator" content="Hugo 0.148.2">
+  <meta charset="UTF-8">
+  <title>Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css">
+</head>
+<body>
+  <div class="sidebar">
+    <h1>Sebastián Aedo</h1>
+    <ul>
+      
+        <li><a href="/categories/black-and-white/">Black and White</a></li>
+      
+        <li><a href="/categories/color/">Color</a></li>
+      
+        <li><a href="/categories/wildlife/">Wildlife</a></li>
+      
+    </ul>
+  </div>
+  <main>
+    
+<h2>Welcome to My Portfolio</h2>
+<p>Select a category from the sidebar to view the gallery.</p>
+
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/glide.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelectorAll(".glide").forEach(function (carousel) {
+        new Glide(carousel, { type: 'carousel', perView: 1, focusAt: 'center' }).mount();
+      });
+    });
+  </script>
+</body>
+</html>
