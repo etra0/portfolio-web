@@ -40,12 +40,17 @@ body {
 .sidebar a {
   color: #000000;
   text-decoration: none;
-  font-size: 1.08rem;
+  
   letter-spacing: 0.5px;
   transition: color 0.2s, border-bottom 0.2s;
   border-bottom: 1px solid transparent;
   padding-bottom: 2px;
 }
+
+.sidebar a:not(.sidebar-title) {
+  font-size: 1.08rem;
+}
+
 .sidebar a:hover {
   color: #a67c52;
   border-bottom: 1px solid #a67c52;
