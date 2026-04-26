@@ -162,7 +162,13 @@
           if (loaded === images.length) layout();
         }
 
-        window.addEventListener('resize', layout);
+        let lastWidth = window.innerWidth;
+        window.addEventListener('resize', () => {
+          if (window.innerWidth !== lastWidth) {
+            lastWidth = window.innerWidth;
+            layout();
+          }
+        });
 
         
         function updateGalleryImages() {
@@ -172,8 +178,6 @@
             img.onclick = function() { expandImage(img.src, img.getAttribute('alt') || '', idx); };
           });
         }
-        
-        window.addEventListener('resize', updateGalleryImages);
       }
 
       
