@@ -262,7 +262,9 @@ p {
 /* Hide sidebar and adjust main on small screens */
 @media (max-width: 700px) {
   body {
-    display: contents;
+    display: block;
+    height: auto;
+    overflow: auto;
   }
 
   .sidebar {
@@ -288,6 +290,8 @@ p {
   main {
     max-width: 100vw;
     padding: 1rem;
+    height: auto;
+    overflow-y: visible;
   }
   #sidebar-overlay {
     display: block;
@@ -307,9 +311,6 @@ p {
 
 /* Optional: Make gallery images a bit smaller on mobile */
 @media (max-width: 700px) {
-  .gallery-row img {
-    height: 120px;
-  }
   .arrow {
     font-size: 1.5rem;
     padding: 0 0.5rem;
