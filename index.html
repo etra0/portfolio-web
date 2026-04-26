@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta name="generator" content="Hugo 0.157.0">
+	<meta name="generator" content="Hugo 0.160.1">
   <meta charset="UTF-8">
   <title>Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,21 +35,106 @@
     
 <h2>Gallery</h2>
 
+
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+  
+    
+  
+    
+      
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+  
+    
+      
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
 <div class="gallery-grid">
   
-    <img src="https://pics.etra0.cl/black&#43;and&#43;white/DSCF3027.jpg" alt="The passage of time" onclick="expandImage('https:\/\/pics.etra0.cl\/black\u002band\u002bwhite\/DSCF3027.jpg', 'The passage of time',  0 )">
+    <img src="https://pics.etra0.cl/black&#43;and&#43;white/DSCF3027.jpg" alt="The passage of time" loading="lazy" width="1440" height="1080" onclick="expandImage('https:\/\/pics.etra0.cl\/black\u002band\u002bwhite\/DSCF3027.jpg', 'The passage of time',  0 )">
   
-    <img src="https://pics.etra0.cl/black&#43;and&#43;white/DSC05786-2.jpg" alt="Un pie de cueca" onclick="expandImage('https:\/\/pics.etra0.cl\/black\u002band\u002bwhite\/DSC05786-2.jpg', 'Un pie de cueca',  1 )">
+    <img src="https://pics.etra0.cl/black&#43;and&#43;white/DSC05786-2.jpg" alt="Un pie de cueca" loading="lazy" width="1350" height="1080" onclick="expandImage('https:\/\/pics.etra0.cl\/black\u002band\u002bwhite\/DSC05786-2.jpg', 'Un pie de cueca',  1 )">
   
-    <img src="https://pics.etra0.cl/color/P3030113-4.jpg" alt="Moon beehind the VLT" onclick="expandImage('https:\/\/pics.etra0.cl\/color\/P3030113-4.jpg', 'Moon beehind the VLT',  2 )">
+    <img src="https://pics.etra0.cl/black&#43;and&#43;white/IMG_3759.jpg" alt="Aurora" loading="lazy" width="1080" height="1350" onclick="expandImage('https:\/\/pics.etra0.cl\/black\u002band\u002bwhite\/IMG_3759.jpg', 'Aurora',  2 )">
   
-    <img src="https://pics.etra0.cl/color/P1000459-Enhanced-NR.jpg" alt="Lasers" onclick="expandImage('https:\/\/pics.etra0.cl\/color\/P1000459-Enhanced-NR.jpg', 'Lasers',  3 )">
+    <img src="https://pics.etra0.cl/color/DSCF2470.jpg" alt="Big mirror" loading="lazy" width="1080" height="1620" onclick="expandImage('https:\/\/pics.etra0.cl\/color\/DSCF2470.jpg', 'Big mirror',  3 )">
   
-    <img src="https://pics.etra0.cl/wildlife/P1001126.jpg" alt="Colibrí Chico" onclick="expandImage('https:\/\/pics.etra0.cl\/wildlife\/P1001126.jpg', 'Colibrí Chico',  4 )">
+    <img src="https://pics.etra0.cl/color/P3030113-4.jpg" alt="Moon beehind the VLT" loading="lazy" width="2048" height="1638" onclick="expandImage('https:\/\/pics.etra0.cl\/color\/P3030113-4.jpg', 'Moon beehind the VLT',  4 )">
   
-    <img src="https://pics.etra0.cl/color/DSCF2470.jpg" alt="Big mirror" onclick="expandImage('https:\/\/pics.etra0.cl\/color\/DSCF2470.jpg', 'Big mirror',  5 )">
+    <img src="https://pics.etra0.cl/color/P1000459-Enhanced-NR.jpg" alt="Lasers" loading="lazy" width="1080" height="1350" onclick="expandImage('https:\/\/pics.etra0.cl\/color\/P1000459-Enhanced-NR.jpg', 'Lasers',  5 )">
   
-    <img src="https://pics.etra0.cl/black&#43;and&#43;white/IMG_3759.jpg" alt="Aurora" onclick="expandImage('https:\/\/pics.etra0.cl\/black\u002band\u002bwhite\/IMG_3759.jpg', 'Aurora',  6 )">
+    <img src="https://pics.etra0.cl/wildlife/P1001126.jpg" alt="Colibrí Chico" loading="lazy" width="1350" height="1080" onclick="expandImage('https:\/\/pics.etra0.cl\/wildlife\/P1001126.jpg', 'Colibrí Chico',  6 )">
   
 </div>
 <div id="expanded-view" class="expanded-view">
@@ -85,7 +170,9 @@
           const containerWidth = container.clientWidth;
 
           images.forEach((img, i) => {
-            const aspect = img.naturalWidth / img.naturalHeight;
+            const w = parseFloat(img.getAttribute('width')) || img.naturalWidth || 1;
+            const h = parseFloat(img.getAttribute('height')) || img.naturalHeight || 1;
+            const aspect = w / h;
             row.push(img);
             rowAspectSum += aspect;
 
@@ -99,11 +186,24 @@
               rowDiv.className = 'gallery-row';
 
               row.forEach(imgInRow => {
-                const aspect = imgInRow.naturalWidth / imgInRow.naturalHeight;
+                const w2 = parseFloat(imgInRow.getAttribute('width')) || imgInRow.naturalWidth || 1;
+                const h2 = parseFloat(imgInRow.getAttribute('height')) || imgInRow.naturalHeight || 1;
+                const aspect2 = w2 / h2;
                 const imgClone = imgInRow.cloneNode();
-                imgClone.style.height = rowHeight + 'px';
-                imgClone.style.width = (rowHeight * aspect) + 'px';
-                rowDiv.appendChild(imgClone);
+                
+                const wrapper = document.createElement('div');
+                wrapper.className = 'img-wrapper';
+                wrapper.style.height = rowHeight + 'px';
+                wrapper.style.width = (rowHeight * aspect2) + 'px';
+                
+                if (imgClone.complete) {
+                  imgClone.classList.add('is-loaded');
+                } else {
+                  imgClone.onload = () => imgClone.classList.add('is-loaded');
+                }
+                
+                wrapper.appendChild(imgClone);
+                rowDiv.appendChild(wrapper);
               });
 
               container.appendChild(rowDiv);
@@ -115,16 +215,26 @@
           updateGalleryImages(); 
         }
 
-        
-        let loaded = 0;
+        let allHaveDimensions = true;
         images.forEach(img => {
-          if (img.complete) loaded++;
-          else img.addEventListener('load', () => {
-            loaded++;
-            if (loaded === images.length) layout();
-          });
+          if (!img.getAttribute('width') || !img.getAttribute('height')) {
+            allHaveDimensions = false;
+          }
         });
-        if (loaded === images.length) layout();
+
+        if (allHaveDimensions) {
+          layout();
+        } else {
+          let loaded = 0;
+          images.forEach(img => {
+            if (img.complete) loaded++;
+            else img.addEventListener('load', () => {
+              loaded++;
+              if (loaded === images.length) layout();
+            });
+          });
+          if (loaded === images.length) layout();
+        }
 
         window.addEventListener('resize', layout);
 
@@ -138,7 +248,6 @@
         }
         
         window.addEventListener('resize', updateGalleryImages);
-        if (loaded === images.length) updateGalleryImages();
       }
 
       

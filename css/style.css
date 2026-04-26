@@ -61,6 +61,7 @@ main {
   flex: 1;
   max-width: calc(100vw - 200px);
   height: 100vh;
+  box-sizing: border-box;
   overflow-y: auto;
   position: relative; /* Ensure overlay is relative to main content */
 }
@@ -114,20 +115,48 @@ p {
   margin-bottom: 8px;
 }
 
-.gallery-row img {
+.gallery-row .img-wrapper {
   display: block;
-  height: 220px;             /* This will be set by JS for each row */
-  width: auto;
-  object-fit: cover;
   border-radius: 6px;
   background: #e0e0e0;
   box-shadow: 0 1px 4px rgba(0,0,0,0.04);
   cursor: pointer;
   transition: box-shadow 0.15s;
+  position: relative;
+  overflow: hidden;
 }
 
-.gallery-row img:hover {
+.gallery-row .img-wrapper:hover {
   box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+}
+
+.gallery-row .img-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(90deg, #e0e0e0 0%, #f0f0f0 50%, #e0e0e0 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite linear;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.gallery-row img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.gallery-row img.is-loaded {
+  opacity: 1;
 }
 
 .gallery-item {

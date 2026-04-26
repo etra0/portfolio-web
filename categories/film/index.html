@@ -36,17 +36,17 @@
 
 <div class="gallery-grid">
   
-    <img src="https://pics.etra0.cl/film/Ilford&#43;Delta&#43;100&#43;120-6.jpg" alt="Clouds in the desert" onclick="expandImage('https:\/\/pics.etra0.cl\/film\/Ilford\u002bDelta\u002b100\u002b120-6.jpg', 'Clouds in the desert',  0 )">
+    <img src="https://pics.etra0.cl/film/Ilford&#43;Delta&#43;100&#43;120-6.jpg" alt="Clouds in the desert" loading="lazy" width="1080" height="1080" onclick="expandImage('https:\/\/pics.etra0.cl\/film\/Ilford\u002bDelta\u002b100\u002b120-6.jpg', 'Clouds in the desert',  0 )">
   
-    <img src="https://pics.etra0.cl/film/Ilford&#43;Delta&#43;100&#43;120-9.jpg" alt="Eyes in the hill" onclick="expandImage('https:\/\/pics.etra0.cl\/film\/Ilford\u002bDelta\u002b100\u002b120-9.jpg', 'Eyes in the hill',  1 )">
+    <img src="https://pics.etra0.cl/film/Ilford&#43;Delta&#43;100&#43;120-9.jpg" alt="Eyes in the hill" loading="lazy" width="1080" height="1080" onclick="expandImage('https:\/\/pics.etra0.cl\/film\/Ilford\u002bDelta\u002b100\u002b120-9.jpg', 'Eyes in the hill',  1 )">
   
-    <img src="https://pics.etra0.cl/film/DSC04374.jpg" alt="Fire" onclick="expandImage('https:\/\/pics.etra0.cl\/film\/DSC04374.jpg', 'Fire',  2 )">
+    <img src="https://pics.etra0.cl/film/DSC04374.jpg" alt="Fire" loading="lazy" width="1080" height="1691" onclick="expandImage('https:\/\/pics.etra0.cl\/film\/DSC04374.jpg', 'Fire',  2 )">
   
-    <img src="https://pics.etra0.cl/film/DSC04395.jpg" alt="Paranal" onclick="expandImage('https:\/\/pics.etra0.cl\/film\/DSC04395.jpg', 'Paranal',  3 )">
+    <img src="https://pics.etra0.cl/film/DSC04395.jpg" alt="Paranal" loading="lazy" width="1080" height="1436" onclick="expandImage('https:\/\/pics.etra0.cl\/film\/DSC04395.jpg', 'Paranal',  3 )">
   
-    <img src="https://pics.etra0.cl/film/DSC04421.jpg" alt="Flying birds" onclick="expandImage('https:\/\/pics.etra0.cl\/film\/DSC04421.jpg', 'Flying birds',  4 )">
+    <img src="https://pics.etra0.cl/film/DSC04421.jpg" alt="Flying birds" loading="lazy" width="1584" height="1080" onclick="expandImage('https:\/\/pics.etra0.cl\/film\/DSC04421.jpg', 'Flying birds',  4 )">
   
-    <img src="https://pics.etra0.cl/film/_DMF8012.jpg" alt="Neuschwanstein Castle" onclick="expandImage('https:\/\/pics.etra0.cl\/film\/_DMF8012.jpg', 'Neuschwanstein Castle',  5 )">
+    <img src="https://pics.etra0.cl/film/_DMF8012.jpg" alt="Neuschwanstein Castle" loading="lazy" width="1080" height="1080" onclick="expandImage('https:\/\/pics.etra0.cl\/film\/_DMF8012.jpg', 'Neuschwanstein Castle',  5 )">
   
 </div>
 <div id="expanded-view" class="expanded-view">
@@ -82,7 +82,9 @@
           const containerWidth = container.clientWidth;
 
           images.forEach((img, i) => {
-            const aspect = img.naturalWidth / img.naturalHeight;
+            const w = parseFloat(img.getAttribute('width')) || img.naturalWidth || 1;
+            const h = parseFloat(img.getAttribute('height')) || img.naturalHeight || 1;
+            const aspect = w / h;
             row.push(img);
             rowAspectSum += aspect;
 
@@ -96,11 +98,24 @@
               rowDiv.className = 'gallery-row';
 
               row.forEach(imgInRow => {
-                const aspect = imgInRow.naturalWidth / imgInRow.naturalHeight;
+                const w2 = parseFloat(imgInRow.getAttribute('width')) || imgInRow.naturalWidth || 1;
+                const h2 = parseFloat(imgInRow.getAttribute('height')) || imgInRow.naturalHeight || 1;
+                const aspect2 = w2 / h2;
                 const imgClone = imgInRow.cloneNode();
-                imgClone.style.height = rowHeight + 'px';
-                imgClone.style.width = (rowHeight * aspect) + 'px';
-                rowDiv.appendChild(imgClone);
+                
+                const wrapper = document.createElement('div');
+                wrapper.className = 'img-wrapper';
+                wrapper.style.height = rowHeight + 'px';
+                wrapper.style.width = (rowHeight * aspect2) + 'px';
+                
+                if (imgClone.complete) {
+                  imgClone.classList.add('is-loaded');
+                } else {
+                  imgClone.onload = () => imgClone.classList.add('is-loaded');
+                }
+                
+                wrapper.appendChild(imgClone);
+                rowDiv.appendChild(wrapper);
               });
 
               container.appendChild(rowDiv);
@@ -112,16 +127,26 @@
           updateGalleryImages(); 
         }
 
-        
-        let loaded = 0;
+        let allHaveDimensions = true;
         images.forEach(img => {
-          if (img.complete) loaded++;
-          else img.addEventListener('load', () => {
-            loaded++;
-            if (loaded === images.length) layout();
-          });
+          if (!img.getAttribute('width') || !img.getAttribute('height')) {
+            allHaveDimensions = false;
+          }
         });
-        if (loaded === images.length) layout();
+
+        if (allHaveDimensions) {
+          layout();
+        } else {
+          let loaded = 0;
+          images.forEach(img => {
+            if (img.complete) loaded++;
+            else img.addEventListener('load', () => {
+              loaded++;
+              if (loaded === images.length) layout();
+            });
+          });
+          if (loaded === images.length) layout();
+        }
 
         window.addEventListener('resize', layout);
 
@@ -135,7 +160,6 @@
         }
         
         window.addEventListener('resize', updateGalleryImages);
-        if (loaded === images.length) updateGalleryImages();
       }
 
       
